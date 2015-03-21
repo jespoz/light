@@ -1,0 +1,89 @@
+{% extends 'admin/base.html' %}
+
+{% block breadcrumbs %}
+    <div class="breadcrumbs">
+        <div class="content-breadcrumbs">
+            <div class="pull-left menu-breadcrumbs">
+                <ul>
+                    {% for self in accesos %}
+                        {% for foo in self.navegacion.all %}
+                            <li id="menu_{{ foo.url }}"><a href="{% url foo.url %}">{{ foo }}</a></li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="pull-right user-pull">
+                <span class="vertical-divider" style="margin-right: 10px;"></span>
+                <span id="username">
+                    {% if user.first_name %}
+                        {{ user.first_name }} {{ user.last_name }}
+                    {% else %}
+                        {{ user.username }}
+                    {% endif %}
+                </span>
+                <span class="vertical-divider"></span>
+                <a href="{% url 'logout' %}">
+                    <i class="glyphicon glyphicon-off"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        {% if request.path == '/design/timeline/' %}
+            <div class="col-md-9">
+                {% block content_9 %}{% endblock %}
+            </div>
+        {% else %}
+            <div class="col-md-12" style="margin-top: 10px;">
+                {% block content_12 %}{% endblock %}
+            </div>
+        {% endif %}
+        {% if request.path == '/design/timeline/' %}
+            <div class="col-md-3 fa-border well">
+                <div class="lateral_right">
+                    {% block prioridades %}{% endblock %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="chat_inline hidden">
+        <div class="chat_heading">
+            <span>
+                <i class="fa fa-comments"></i>
+                <span>Conectate con Nosotros</span>
+            </span>
+            <i class="fa fa-arrow-circle-o-up"></i>
+        </div>
+        <div class="chat_body">
+            <div class="alert alert-success">
+                Conectate con uno de nuestros analistas para resolver tus dudas, estamos encantados de poder ayudarte <i class="fa fa-smile-o"></i>
+            </div>
+            <article>
+                {% for self in analistas %}
+                    <p class="analista" data-id="{{ self.usuario.id }}" data-analista="{{ self.usuario.first_name }} {{ self.usuario.last_name }}"><i class="fa fa-circle"></i> {{ self.usuario.first_name }} {{ self.usuario.last_name }}</p>
+                {% endfor %}
+            </article>
+        </div>
+        <div class="chat_content">
+            <div class="chat_header">
+                <span class="nom_an"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <hr/>
+            </div>
+            <div class="chat_chatroom">
+                <ul id="comentarios">
+
+                </ul>
+            </div>
+            <div class="chat_submit">
+                <hr/>
+                <input type="text" id="comentario"/>
+                <button id="enviar_chat" class="btn btn-success" type="submit">Enviar</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

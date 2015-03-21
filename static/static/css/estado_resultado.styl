@@ -1,0 +1,607 @@
+blanco = #FFF
+marron = #AC291F
+verde = #4D9379
+naranjo = #E3713B
+amarillo = #E5C730
+cafe = #86663E
+gris = #5D5D5D
+
+canvas
+    display block
+    position absolute
+    top 0
+    left 0
+
+hr
+    border-color marron -moz-use-text-color -moz-use-text-color
+    border-style dashed
+    margin-top 10px
+    margin-bottom 10px
+
+h4
+    color marron
+    font-family "Open Sans", sans-serif
+    font-size 1.2em
+
+h5, h6
+    color verde
+
+#breadcrumbs_sector
+    margin 4px auto
+    width 100%
+    i
+        font-size 16px
+        float right
+        padding-left 5px
+    aside
+        line-height 20px
+        position relative
+        user-select none
+        float left
+        width 70%
+        span
+            margin-right 10px
+        &.arrow
+            background-color #8D96ED
+            padding-left 10px
+            &:after, &:before
+                border-width 10px 0 10px 10px
+            &:before
+                border-color #8D96ED transparent
+                left -10px
+            &:after
+                border-color transparent #8D96ED
+                right -10px
+        &:before, &:after
+            content ''
+            position absolute
+            height 0
+            width 0
+            border-style solid
+            border-width 0
+
+#breadcrumbs_costo
+    margin 4px auto
+    margin-top 0
+    i
+        font-size 16px
+        float right
+        padding-left 5px
+    aside
+        line-height 20px
+        position relative
+        user-select none
+        float left
+        width 80px
+        height 40px
+        margin-left 15px
+        p
+            font-size 12px
+            text-align center
+            small
+                display block
+                font-size 14px
+                font-width bold
+        &:first-child
+            width 90px
+            margin-left 0px
+        &.arrow
+            background-color #8D96ED
+            &:after, &:before
+                border-width 20px 0 20px 10px
+                height 40px
+            &:before
+                border-color #8D96ED transparent
+                left -10px
+            &:first-child
+                &:before
+                    border-width 0
+            &:after
+                border-color transparent #8D96ED
+                right -10px
+        &:before, &:after
+            content ''
+            position absolute
+            height 0
+            width 0
+            top 0
+            border-style solid
+            border-width 0
+
+#estadoresultado
+    background-image url("../img/cuadro_err.png")
+    background-size 480px
+    background-repeat no-repeat
+    height 190px
+    width 480px
+    margin auto
+    position relative
+    #margen_titulo
+        height 190px
+        width 480px
+        display table-cell
+        vertical-align middle
+        text-align center
+        p
+            line-height 0.8
+            font-family "Open Sans", sans-serif
+            color white
+        #margen
+            font-size 35px
+            text-shadow #666 2px 2px 2px
+
+#gasto_venta
+    height 370px
+    padding 0
+    div
+        height 370px
+        width 30px
+        background-color verde
+    p
+        height 30px
+        width 300px
+        transform rotate(-90deg)
+        transform-origin 10px 20px
+        color blanco
+        position absolute
+        bottom 0
+        padding-left 140px
+        margin-left 15px
+
+#grafico_costo
+    .stacked
+        background-color transparent
+        float left
+        height 230px
+        padding-right 10px
+        width 33%
+        .stacked-column p
+            padding-top 15px
+            span
+                font-weight 300
+        p
+            color gris
+            text-align center
+
+
+#graph-facturado
+    position relative
+    width 70px
+    height 70px
+    margin-left 20px
+    span
+        position absolute
+        color marron
+        display block
+        line-height 70px
+        text-align center
+        width 70px
+        font-family "Open Sans", sans-serif
+        font-size 18px
+        font-weight 10
+
+#graph-pedido
+    position relative
+    width 70px
+    height 70px
+    margin-left 20px
+    span
+        position absolute
+        color marron
+        display block
+        line-height 70px
+        text-align center
+        width 70px
+        font-family "Open Sans", sans-serif
+        font-size 18px
+        font-weight 10
+
+#info_ee_rr
+    font-family "Open Sans", sans-serif
+    font-size 14px
+    background #fcfff4 /* Old browsers */
+    background -moz-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%) /* FF3.6+ */
+    background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fcfff4), color-stop(40%, #ebf1e2), color-stop(100%, #ececec)); /* Chrome,Safari4+ */
+    background -webkit-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* Chrome10+,Safari5.1+ */
+    background -o-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* Opera 12+ */
+    background -ms-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* IE10+ */
+    background radial-gradient(ellipse at center, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* W3C */
+    h1, h2
+        color blanco
+        text-shadow #666 2px 2px 2px
+
+#sector1, #sector11, #clase99, #clase5
+    background-color naranjo !important
+    color #ffffff
+    &:after
+        border-color transparent naranjo !important
+        right -10px
+    &:before
+        border-color naranjo transparent !important
+        left -10px
+
+#sector2, #sector12, #clase1, #clase6, #clase97
+    background-color amarillo !important
+    color #ffffff
+    &:after
+        border-color transparent amarillo !important
+        right -10px
+    &:before
+        border-color amarillo transparent !important
+        left -10px
+
+#sector3, #clase2, #clase7
+    background-color verde !important
+    color #ffffff
+    &:after
+        border-color transparent verde !important
+        right -10px
+    &:before
+        border-color verde transparent !important
+        left -10px
+
+#sector4, #clase3, #clase8
+    background-color cafe !important
+    color #ffffff
+    &:after
+        border-color transparent cafe !important
+        right -10px
+    &:before
+        border-color cafe transparent !important
+        left -10px
+
+#sector10, #clase4
+    background-color marron !important
+    color #ffffff
+    &:after
+        border-color transparent marron !important
+        right -10px
+    &:before
+        border-color marron transparent !important
+        left -10px
+
+#sucursal
+    h2
+        font-size 1.5em
+        color marron
+
+#venta_titulo
+    position absolute
+    top 0
+    left 8px
+    width 150px
+    height 90px
+
+#kilos_titulo
+    position absolute
+    top 0
+    right 8px
+    width 150px
+    height 90px
+
+#ingreso_titulo
+    position absolute
+    top 96px
+    left 8px
+    width 150px
+    height 90px
+
+#gasto_titulo
+    position absolute
+    top 96px
+    right 8px
+    width 150px
+    height 90px
+
+.alert-sucursal
+    width 99.96%
+    float left
+    padding 10px
+    color blanco
+    background-color verde
+    display inline-bloc
+    text-align center
+
+.btn
+    color blanco !important
+
+.border-14
+    border-left 20px solid naranjo
+    padding-left 10px
+    margin-bottom 0
+
+.border-24
+    border-left 20px solid amarillo
+    padding-left 10px
+    margin-bottom 0
+
+.border-20
+    border-left 20px solid verde
+    padding-left 10px
+    margin-bottom 0
+
+.border-98
+    border-left 20px solid cafe
+    padding-left 10px
+    margin-bottom 0
+
+.btn-xs
+    padding 1px 15px
+
+.caja_amarilla
+    background-color amarillo
+    color white
+    padding 5px 10px
+
+.caja_marron
+    background-color marron
+    color white
+    padding 5px 10px
+
+.caja_naranja
+    background-color naranjo
+    color white
+    padding 5px 10px
+
+.caja_verde
+    background-color verde
+    color white
+    padding 5px 10px
+    height 45px
+    margin-bottom 0
+
+.category
+    height 80px
+    margin-top 260px
+    ul
+        padding-left 0
+    li
+        display inline-block
+        padding-left 5px
+        padding-right 5px
+
+.center-circular
+    margin auto
+    padding-left 0
+    padding-right 0
+    width 300px
+
+.contenido_cajas
+    display table-cell
+    vertical-align middle
+    text-align center
+    width 150px
+    height 100px
+    p
+        line-height 0.8
+        font-family "Open Sans", sans-serif
+        color white
+        font-size 12px
+    .cajas_inside
+        font-size 15px
+        text-shadow #666 2px 2px 2px
+
+.costo-total
+    display inline
+    float right
+    margin-bottom 0
+    font-size 18px
+    vertical-align top
+    margin-top -10px
+    margin-right 5px
+
+.div_info_circular_progress
+    width 200px
+    height 66px
+    position absolute
+    margin-left 40px
+    box-shadow 10px 10px 5px 0px rgba(0,0,0,0.5)
+    font-size 14px
+    text-align right
+    padding-left 30px
+    padding-right 10px
+
+.down
+    color red
+
+.footer
+    float right
+    margin-bottom 10px
+    i
+        padding-right 10px
+
+.info_circular
+    position absolute !important
+    font-family "Open Sans", sans-serif !important
+    font-size 12px !important
+    line-height 14px !important
+    width 160px !important
+    display block !important
+    height 66px !important
+    text-align left !important
+    padding-top 10px !important
+    padding-left 10px !important
+
+.filtros
+    width 100%
+    text-align center
+    height 25px
+
+.mano-obra
+    color verde
+    position relative
+    margin-top 20px
+    width 195px
+    display inline
+    span
+        padding 0 25px
+        position relative
+        z-index 5
+    &:before
+        content ''
+        display block
+        border-top solid 2px verde
+        width 20px
+        height 1px
+        position absolute
+        top 50%
+        z-index 1
+    &:after
+        content ''
+        display block
+        border-top solid 2px verde
+        width 20px
+        height 1px
+        position absolute
+        top 50%
+        z-index 1
+        right 0
+
+.p_sin_padding
+    padding-bottom 0px
+    margin-bottom 0px
+
+.panel-title
+    font-size 1.5em
+
+.parrafo
+    border-left solid 5px verde
+    b
+        color verde
+        font-family "Open Sans", sans-serif
+        padding-left 10px
+        font-weight 600
+    p
+        padding-left 10px
+
+.periodos
+    display inline-block
+    li
+        font-family "Open Sans Light", sans-serif
+        font-size 12px
+        display inline
+        list-style none
+        &:last-child
+            text-transform uppercase
+            font-size 18px
+
+.porcentaje
+    font-weight bold
+    float left
+
+.pp_tc
+    height 120px
+    color white
+    p
+        line-height 0.5
+        i
+            font-size 20px
+    img
+        padding-top 10px
+        padding-bottom 10px
+        margin-left auto
+        margin-right auto
+
+.progress
+    margin-bottom 0
+    height 15px
+    .progress-bar
+        background-color naranjo
+
+.tc_ul
+    padding-left 0
+    list-style none
+    li
+        font-family "Open Sans", sans-serif
+        font-size 1em
+        line-height 20px
+        padding-left 10px
+        span
+            float right
+        &.border-tradicional
+            border-left 20px solid naranjo
+            border-bottom 1px solid naranjo
+        &.border-supermercados
+            border-left 20px solid amarillo
+            border-bottom 1px solid amarillo
+        &.border-industriales
+            border-left 20px solid verde
+            border-bottom 1px solid verde
+        &.border-foodservice
+            border-left 20px solid cafe
+            border-bottom 1px solid cafe
+        &.border-otros
+            border-left 20px solid gris
+            border-bottom 1px solid gris
+        &.border-grandes
+            border-left 20px solid marron
+            border-bottom 1px solid marron
+
+.stacked
+    height 320px
+    background-color naranjo
+
+.stacked-column
+    p
+        text-align center
+        font-size 12px
+        padding-top 5px
+        color blanco
+        span
+            display block
+            text-align center
+            font-weight bold
+            color blanco
+            font-size 16px
+    &:nth-last-child(2)
+        background-color #ffddcd
+    &:nth-last-child(3)
+        background-color #f28f60
+    &:nth-last-child(4)
+        background-color #feb897
+    &:nth-last-child(5)
+        background-color #faa076
+
+.stacked-title
+    height 50px
+    text-align center
+
+.text-naranjo
+    color naranjo
+
+.text-marron
+    color marron
+
+.text-amarillo
+    color amarillo
+
+.text-verde
+    color verde
+
+.tradicional
+    background-color naranjo
+
+.supermercados
+    background-color amarillo
+
+.industriales
+    background-color cafe
+
+.foodservice
+    background-color verde
+
+.grandes
+    background-color marron
+
+.up
+    color verde
+
+.valor_circular
+    position absolute !important
+    font-family "Open Sans", sans-serif !important
+    display block !important
+    width 160px !important
+    text-align right !important
+    padding-top 15px !important
+    font-size 15px !important
+    font-weight bold !important

@@ -1,0 +1,49 @@
+.nav-tabs li {
+  color: #4d9379;
+  margin-bottom: -2px;
+}
+.nav-tabs li a {
+  color: #4d9379 !important;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+}
+.nav-tabs li.active a {
+  border-top: medium solid !important;
+}
+.row {
+  margin-top: 20px;
+}
+.row a {
+  color: #fff !important;
+}
+.row i {
+  color: #fff;
+}
+.tab-pane button {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+.tab-pane h3 {
+  color: #4d9379 !important;
+  display: inline-block;
+  font-family: "Open Sans", sans-serif !important;
+  font-weight: 300 !important;
+  text-align: center;
+  width: 100%;
+}
+.tab-pane table {
+  width: 70%;
+}
+.tab-pane table thead th {
+  color: #4d9379;
+  text-align: center;
+}
+.tab-pane table tbody button {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+.tab-pane table tbody i {
+  color: #4d9379;
+}

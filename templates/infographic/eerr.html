@@ -1,0 +1,463 @@
+{% extends 'maqueta.html' %}
+{% load humanize %}
+{% block title %}Estado de Resultado{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/estado_resultado.css"/>
+{% endblock %}
+{% block content_12 %}
+    <div class="container-fuid" id="periodo">
+        <div class="filtros">
+            {% if periodo_anterior %}
+                <div class="pull-left">
+                    <a href="{% url 'eerr_filtro' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+                </div>
+            {% else %}
+                <div class="pull-left">
+                    <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+                </div>
+            {% endif %}
+            {% if periodo_posterior %}
+                <div class="pull-left" style="margin-left: 10px;">
+                    <a href="{% url 'eerr_filtro' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+                </div>
+            {% else %}
+                <div class="pull-left" style="margin-left: 10px;">
+                    <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+                </div>
+            {% endif %}
+            <div class="pull-right">
+                <a href="#information" data-toggle="modal" class="btn btn-success btn-xs"><i class="fa fa-info-circle" style="padding-right: 5px;"></i>Información</a>
+                <div class="modal fade" id="information" role="dialog">
+                    <div class="modal-dialog" style="z-index: 9999;">
+                        <p class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <img style="display: block; width: 64px; margin-left: auto; margin-right: auto; margin-bottom: 20px;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAcIAAAHCAEOBzbKAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAtxQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAjTcXJwAAAPN0Uk5TAAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISMkJSYnKCkqKywtLi8wMTIzNDU2Nzg5Ozw9Pj9AQUJDREVGR0hJSktMTU5QUVJTVFVWV1hZWlxdXl9gYWJjZGVmaGlqa2xtbm9wcXJzdHV2d3h5ent8fX5/gIGCg4SFhoeJiouMjY6PkJGSk5SVl5iZmpucnZ+goaKjpKWmp6ipqqusra6vsLGys7a3uLm6u7y9vr/AwcPExcbHyMnKy8zNzs/Q0dLT1NXW19jZ2tvc3d7f4OHj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+Kc9mwAAABbZJREFUGBm1wYtflYUBx+Evh6sIiOhCnEIQ0hSmTQ1Wm7ooJS+zHGqbt1mpKM2xOjpsKMuyRqTZNE28hM7JKNNm2wBBppWTBKfLK7CWImCBwIHz+wf2nnNekYv1eemzPQ//O/7TsrcWvp2zIoZvJGbHDZlOLbTRV4Eb26SL++1T5m0sbZIqHuQrDEqe99yKWYk+dBf5sbQjHHxH3wXeM2rkWMod9Fte3C63urwJdBH1mWqngc+aZqlsJITmSWvpyfZkjdTy99cXZew9L+lQArcEntTBgcAGuVyLAKbf1By6C35XOjDWF7ewxy+rZT6mzaoOBSI65LYZQ4aaI+lqSIWuzeW2kG1SNm6xDqVgmCaPDzHYypRHF/5leiecblJqtQSXPdqOyyR5FOMyorkjjtveVLk3EJOzGmI//GM8hsR2xw+BwCZnGC4hjXLLwu01ZdIpSTfvBYLqpadTCqRiXF5UhQ1mqgqPRXKpCMBtrk7Q6ahWYvC9Ko+tuPh9onmwQXmYHilpupAThEesnL6YxqvchuHbV+TRMGFoAvA9fQR5SsM05o2o9PRgPLwaFInpBdkhJH9LpVSRMXlVidTqcCYDFxTJYSXh5p0rXZIuj8GjSImYKvQw/FqG/AAML8uwD/iDlvInPYBL2AeSCiQ1zcKtRPHMysrKskOzBkG+pOpgXLwOSo4lwK+UwxtKxTDivAzPNEhyPo/LBYWxV1IDA3QRGLpTysVjtvRTDJO0F7t+C3iVy+XR43J5CBjoaIBfFhYW7iFaH2CIlpbjMU56AsNwvU+CKoGn5BazSy5n/OBn2ospSLUYxkpb8ZgjfZICTNZu+Je+D1VSm9TqvUbqcEqPwd80l1u+0BBIcUhXo3DxOirpCpCpl2GFzvX3aZOOSlWkSi3/kDJZpup+3HJcU2GpDFUDAd9XZSgACrUIfD/V1jipfb1UP/wVqeU1aVdcsxbSKVPPQ2ito1qqf/vn2RVSTdrWaKCmIxyY0qFNUrVd0j+dUssy6dgJFdvolKBKPxg4eGC5PFrjcUlWKS6r5JTq7PJoWSk5dXEwXRzSelyelmkshuBLmolbrqSbdnm0rJJ06Tt0ldDRPh7DOunEmFHX1ZKAYYuOYXqqTToqD8dxqeRbdPeSKv2BAPvBJJiUHYfhYTXfxy1xB3Rb7ZPe9GA7pNIRdLOgwZlKF/e9WCWXLwvm96e3AcVq/oWNThEH1Z5GD0EjJoyLsHFnftulkqlDcPEetaxOjSn00fTTkmreXbuxtEnqeGs4Xy15Andi+8m+RrmdfWkkXyNDp230ErDYG/ziH5mf+mAUXy+yRQvpZa1KvLAoR1cC6CG2Rc9h1eBGzcbgf3dsEKYjOu2LZfMmEjwn/3MZbhxeEgHMlfMH9IFfep2k5mNH6iS15oQR/d5b9MGos2rfviDBG4ietaFB16eDH9ZNv6Gq++k07LA6VtMHDznaN/jT1eJGPYtlsdeVSg/3NnXMwKpi5dNLuq6GYM1UfTaIXryKlY015fox3fh8dygQ0/RlEFYM09m0IpMdGPBms3R5NuTpcaxYqt25Mu2AkE918s976rWONO3Eiu1KTysy2eH3yko5t/vRU+3jElWJFYf0AEl20xO2Gx/ZPi+ZGZGoVwLa6rHipDMQu0xFI5TLmvZ1Abbmv3JK/lhQquHYZSoK0y6bz5ayZ4Kd+6hx2LBgvx4jeorpfs40jDr/nwujn1X6UFVjxe+0HrtMRUzVueRN92S2ne03Q6VYMVlHsMtUBBmtckhnEsjWb7DCr7EhJHKiaQwwMvu9nUsCoEyjsWSTtnEHi3UCa8K/UAq9RN3Qj7BolWpC6cHrL3oHq7wK9P5ddOOfqzOhWNa/XFdT6WJ8pf59D33Qb5+0PxxTwAvt+ngYfeK14po6qvKWJ8Uv2Hy8Va2vBtJXA7IvylS37W6+kdErc/IPvL56og//V/8FKDSOXClXOzMAAAAASUVORK5CYII11e46638d21e4bbb189ef3e0879736dd"/>
+                            {% for foo in informacion %}
+                                {{ foo.descripcion }}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="info_ee_rr" class="container-fluid">
+        <h1 class="text-center">ESTADO DE RESULTADO</h1>
+        <h2 class="panel-title text-center">{% for pp in periodo %}{{ pp.periodo__periodo|upper }}{% endfor %}</h2>
+        <div id="sucursal">
+            <h2>
+                {% for of in perfil %}
+                    {% for n in of.oficina.all %}
+                        {{ n|upper }}
+                    {% endfor %}
+                {% endfor %}
+            </h2>
+        </div>
+        <hr/>
+        <div class="col-md-3" style="padding: 0px 5px; border-right: 1px solid #CCC;">
+            <div class="text-center"><h4>MARGEN MENSUAL</h4></div>
+            <br/>
+            <div id="grafico_margen">
+                <div id="margen-graph" style="height: 200px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <div class="col-md-6" style="min-width: 500px;">
+            <div class="text-center"><h4>PERIODO VS AÑO ANTERIOR</h4></div>
+            <div id="estadoresultado">
+                <div id="margen_titulo">
+                    <p style="line-height: 0.3;">MARGEN</p>
+                    <p id="margen"><b>{{ margen_porc|floatformat:1|intcomma }} %</b></p>
+                    <p><small>{{ margen_peso|floatformat:0|intcomma }} M$</small></p>
+                </div>
+                <div id="venta_titulo">
+                    <div class="contenido_cajas">
+                        <p style="line-height: 0.3;">VENTA</p>
+                        <p class="cajas_inside"><b>{{ venta|floatformat:0|intcomma }} M$</b></p>
+                        <p style="line-height: 0.3;">{% if venta_crec > 0 %}+{% endif %}{{ venta_crec }}%</p>
+                    </div>
+                </div>
+                <div id="kilos_titulo">
+                    <div class="contenido_cajas">
+                        <p style="line-height: 0.3;">KILOS</p>
+                        <p class="cajas_inside"><b>{{ kilo|floatformat:0|intcomma }} TON</b></p>
+                        <p style="line-height: 0.3;">{% if kilo_crec > 0 %}+{% endif %}{{ kilo_crec }}%</p>
+                    </div>
+                </div>
+                <div id="ingreso_titulo">
+                    <div class="contenido_cajas">
+                        <p style="line-height: 0.3;">INGRESO</p>
+                        <p class="cajas_inside"><b>{{ ingreso|floatformat:0|intcomma }} M$</b></p>
+                        <p style="line-height: 0.3;">{% if ingreso_crec > 0 %}+{% endif %}{{ ingreso_crec }}%</p>
+                    </div>
+                </div>
+                <div id="gasto_titulo">
+                    <div class="contenido_cajas">
+                        <p style="line-height: 0.3;">GASTO</p>
+                        <p class="cajas_inside"><b>{{ gasto|floatformat:0|intcomma }} M$</b></p>
+                        <p style="line-height: 0.3;">{% if gasto_crec > 0 %}+{% endif %}{{ gasto_crec }}%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="border-left: 1px solid #CCC; padding: 0px 5px;">
+            <div class="text-center"><h4>UNITARIOS ($/KG)</h4></div>
+            <br/>
+            <div id="grafico_margen">
+                <div id="unitario-graph" style="height: 200px; margin: 0 auto"></div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row text-center"><h4>PRECIO PROMEDIO VS ZONA {% for zona in zona %}{{ zona.zona__zona|upper }}{% endfor %}</h4></div>
+        <br/>
+        <div class="container-fluid">
+            <section class="col-md-4">
+                <h5 class="text-left">REAL MES</h5>
+                {% for sect in real %}
+                    <div id="breadcrumbs_sector" class="pull-left">
+                        <aside id="sector{{ sect.sector.id }}" class="arrow">{{ sect.sector|truncatechars:13|upper }} <span class="pull-right">${{ sect.precio|floatformat:0|intcomma }}</span></aside>
+                        <span class="pull-right porcentaje {% if sect.variacion > 0 %}text-success{% elif sect.variacion == 0 %}text-amarillo{% else %}text-danger{% endif %}">{{ sect.variacion }}%  <i class="glyphicon glyphicon-{% if sect.variacion > 0 %}upload{% elif sect.variacion == 0 %}record{% else %}download{% endif %} {% if sect.variacion > 0 %}text-success{% elif sect.variacion == 0 %}text-amarillo{% else %}text-danger{% endif %}"></i></span>
+                    </div>
+                {% endfor %}
+            </section>
+            <section class="col-md-4" style="border-left: 1px solid #CCC; border-right: 1px solid #CCC;">
+                <div class="parrafo">
+                    <b>
+                        {% for self in mensaje %}
+                            {% if self.primera_titulo %}
+                                {{ self.primera_titulo }}
+                            {% elif self.segunda_titulo %}
+                                {{ self.segunda_titulo }}
+                            {% else %}
+                                {{ self.tercera_titulo }}
+                            {% endif %}
+                        {% endfor %}
+                    </b>
+                    <p class="text-justify">
+                        <small>
+                            {% for self in mensaje %}
+                                {% if self.primera_mensaje %}
+                                    {% autoescape off %}{{ self.primera_mensaje }}{% endautoescape %}
+                                {% elif self.segunda_mensaje %}
+                                    {% autoescape off %}{{ self.segunda_mensaje }}{% endautoescape %}
+                                {% else %}
+                                    {% autoescape off %}{{ self.tercera_mensaje }}{% endautoescape %}
+                                {% endif %}
+                            {% endfor %}
+                        </small>
+                    </p>
+                </div>
+                <hr/>
+                <div class="container-fluid">
+                    {% for tipo in pptipocliente %}
+                        <div class="pp_tc {{ tipo.tipoCliente|lower}}" style="display: inline-block; width: {{ ancho_pp_tc }}%; text-align: center;">
+                            <p><img src="{{ STATIC_URL }}img/{{ tipo.tipoCliente }}.png" alt="{{ tipo.tipoCliente }}" width="30" height="45"/></p>
+                            <p class="text-center"><b>{{ tipo.tipoCliente.abreviacion|upper }}</b></p>
+                            <p class="text-center"><b>{{ tipo.variacion }}%</b></p>
+                            <p class="text-center"><i class="glyphicon glyphicon-{% if tipo.variacion > 0 %}upload{% elif tipo.variacion == 0 %}record{% else %}download{% endif %}"></i></p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="col-md-4">
+                <h6 class="text-center" style="line-height: 0.1;"><b>TIPO CLIENTE - SECTOR</b></h6>
+                <p><h6 class="text-center"><b>BAJO PRECIO PROMEDIO ZONAL</b></h6></p>
+                <img src="{{ STATIC_URL }}img/danger.png" alt="" width="100%"/>
+                <div style="padding-left: 10px;">
+                    {% for foo in pptcs %}
+                        <div class="col-md-5 text-naranjo" style="border-bottom: 1px dashed #CCC; font-size: 12px;"><b>{{ foo.tipoCliente|truncatechars:13 }}</b></div>
+                        <div class="col-md-4" style="border-bottom: 1px dashed #CCC; font-size: 12px;">{{ foo.sector|truncatechars:13 }}</div>
+                        <div class="col-md-3 text-right" style="border-bottom: 1px dashed #CCC; font-size: 12px;"><b class="text-danger">{{ foo.variacion }}%</b></div>
+                    {% endfor %}
+                </div>
+            </section>
+        </div>
+        <section class="footer">
+            <a class="btn btn-xs btn-warning" href=""><i class="fa fa-search"></i>Accionables...</a>
+        </section>
+        <hr/>
+        <div class="row text-center"><h4>PRECIOS Y DESCUENTOS</h4></div>
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <h6 class="caja_verde">
+                    <b>TOTAL DESCUENTOS PERIODO</b>
+                    {% for foo in desc_total %}
+                        <span class="pull-right"><b style="font-size: 15px;">{{ foo.descuento|floatformat:0|intcomma }} M$</b></span>
+                        <br/>
+                        <div style="width:100%; text-align: right;">Lo que representa un <b style="font-size: 15px; color: #E5C730;">{{ foo.participacion }}%</b> sobre el total de venta posible*</div>
+                    {% endfor %}
+                </h6>
+            </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <article class="col-md-4">
+                        <h6 class="caja_naranja">
+                            <b>
+                            GESTION COMERCIAL
+                            {% for foo in desc_total %}
+                                <span class="pull-right">{{ foo.comercial|floatformat:0|intcomma }} M$</span>
+                            {% endfor %}
+                            </b>
+                        </h6>
+                        {% for foo in desc_com %}
+                            <p style="border-bottom: 1px #CCC solid;"><img src="{{ STATIC_URL }}img/{{ foo.tipoCliente|lower }}-color.png" width="25" style="margin-right: 10px;" alt="{{ foo.tipoCliente }}"/>{{ foo.tipoCliente }} <span class="pull-right"><b class="text-naranjo">{{ foo.descuento|floatformat:0|intcomma }} M$</b></span></p>
+                        {% endfor %}
+                        <br/>
+                        <h6 class="caja_marron">
+                            <b>
+                            PRECIO VIGENTE
+                            {% for foo in desc_total %}
+                                <span class="pull-right">{{ foo.vigente|floatformat:0|intcomma }} M$</span>
+                            {% endfor %}
+                            </b>
+                        </h6>
+                        <div class="text-center text-marron" style="width: 100%; line-height: 0.3;"><small><b>Precio Lista + Recargos - Descuentos</b></small></div>
+                        <br/>
+                        {% for foo in desc_vig %}
+                            <p style="border-bottom: 1px #CCC solid;"><img src="{{ STATIC_URL }}img/{{ foo.tipoCliente|lower }}-color.png" width="25" style="margin-right: 10px;" alt="{{ foo.tipoCliente }}"/>{{ foo.tipoCliente }} <span class="pull-right"><b class="text-naranjo">{{ foo.descuento|floatformat:0|intcomma }} M$</b></span></p>
+                        {% endfor %}
+                    </article>
+                    <article class="col-md-8" style="padding-left: 0;">
+                        <h6 class="caja_amarilla">
+                            <b>
+                            GESTION SUCURSAL
+                            {% for foo in desc_total %}
+                                <span class="pull-right">{{ foo.sucursal|floatformat:0|intcomma }} M$</span>
+                            {% endfor %}
+                            </b>
+                        </h6>
+                        <article class="col-md-6" style="border-left: 1px solid #CCC; border-right: 1px solid #CCC;">
+                            <div class="text-center">
+                                <h4>PRECIO PEDIDO</h4>
+                                <div class="center-circular">
+                                {% for foo in desc_suc %}
+                                    <div class="chart" id="graph-pedido" data-percent="{{ foo.peso_pedido|floatformat:0|intcomma }}" data-valor="{{ foo.pedido|floatformat:0|intcomma }} M$"></div>
+                                {% endfor %}
+                                </div>
+                                <br/>
+                                <h6>DESCUENTOS POR TIPO DE CLIENTE</h6>
+                                <div class="text-left">
+                                    <ul class="tc_ul">
+                                        {% for foo in desc_tc_pedido %}
+                                            <li class="border-{{ foo.tipoCliente|lower }}">{{ foo.tipoCliente|upper }} <span>{{ foo.descuento|floatformat:0|intcomma }} M$</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="alert-sucursal">
+                                        {% for foo in peso_call_ped %}
+                                            {{ foo.total }}% - PEDIDOS SUCURSAL
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="col-md-6" style="margin-bottom: 20px;">
+                            <div class="text-center">
+                                <h4>PRECIO FACTURADO</h4>
+                                <div class="center-circular">
+                                    {% for foo in desc_suc %}
+                                        <div class="chart" id="graph-facturado" data-percent="{{ foo.peso_facturado|floatformat:0|intcomma }}" data-valor="{{ foo.facturado|floatformat:0|intcomma }} M$"></div>
+                                    {% endfor %}
+                                </div>
+                                <br/>
+                                <h6>DESCUENTOS POR TIPO DE CLIENTE</h6>
+                                <div class="text-left">
+                                    <ul class="tc_ul">
+                                        {% for foo in desc_tc_facturado %}
+                                            <li class="border-{{ foo.tipoCliente|lower }}">{{ foo.tipoCliente|upper }} <span>{{ foo.descuento|floatformat:0|intcomma }} M$</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                    <div class="alert-sucursal">
+                                        {% for foo in peso_call_fact %}
+                                            {{ foo.total }}% - PEDIDOS SUCURSAL
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <hr/>
+                        <div class="parrafo">
+                            <b>A CONSIDERAR!!</b>
+                            <span class="pull-right"><h6>* Venta Neta + Descuentos</h6></span>
+                            <p style="text-align: justify; width: 60%;">
+                                <small>
+                                    El <span class="text-naranjo" style="font-weight: bold;">{{ peso_desc|floatformat:0 }}%</span> de los descuentos aplicados, son gestionados en la sucursal,
+                                    por lo que claramente hay un trabajo que se puede hacer para revertir esta situación.
+                                </small>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <section class="footer">
+            <a class="btn btn-xs btn-warning" href=""><i class="fa fa-search"></i>Accionables...</a>
+        </section>
+        <hr/>
+        <div class="row text-center"><h4>COSTOS UNITARIOS (gasto/venta)</h4></div>
+        <div class="container-fluid">
+            <div class="container-fluid">
+                <div class="row" style="border-bottom: 1px solid #CCC;">
+                    <div class="col-md-9" style="padding-left: 0; padding-top: 25px;">
+                        <p class="mano-obra" style="margin-bottom: 0;"><span><b>MANO OBRA {{ mano_obra }}%</b></span></p>
+                        <p class="costo-total text-verde">
+                            <b>GASTO TOTAL
+                                {% for self in costo_total %}
+                                    {{ self.sucursal }}%
+                                {% endfor %}
+                            </b>
+                        </p>
+                        <div id="breadcrumbs_costo">
+                            {% for foo in costos %}
+                                <aside class="arrow" id="clase{{ foo.claseCoste.id }}">
+                                    <p>{{ foo.claseCoste.seudo }}<small>{{ foo.costo }}%</small></p>
+                                </aside>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="padding: 0; margin-top: -50px;">
+                        <h5 class="text-naranjo text-center" style="margin-bottom: 0;">GASTO TOTAL / VENTA</h5>
+                        <div id="costos-graph" style="height: 140px; margin: 0 auto"></div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-md-1" id="gasto_venta">
+                        <div>
+                            <p>GASTOS DE VENTAS</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="parrafo">
+                            <p style="text-align: justify;">
+                                <small>Se profundiza este items, ya que representa un
+                                    <span class="text-naranjo" style="font-weight: bold;">
+                                        {% for foo in peso_gasto_venta %}
+                                         {{ foo.gasto }}%
+                                        {% endfor %}
+                                    </span>
+                                    del gasto total
+                                </small>
+                            </p>
+                        </div>
+                        <h4 class="text-naranjo text-center" style="margin-bottom: 0;">PARTICIPACION</h4>
+                        <div id="grafico_costo">
+                            <div class="stacked">
+                                {% for self in costos_ventas %}
+                                    <div class="stacked-column" style="height: {{ self.nacional|floatformat:0 }}%; background-color: {{ self.claseCoste.color }}">
+                                        {% if self.nacional > 15 %}
+                                            <p><span>{{ self.nacional }}%</span></p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <p>NAC</p>
+                            </div>
+                            <div class="stacked">
+                                {% for self in costos_ventas %}
+                                    <div class="stacked-column" style="height: {{ self.zonal|floatformat:0 }}%; background-color: {{ self.claseCoste.color }}">
+                                        {% if self.zonal > 15 %}
+                                            <p><span>{{ self.zonal }}%</span></p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <P>ZON</P>
+                            </div>
+                            <div class="stacked">
+                                {% for self in costos_ventas %}
+                                    <div class="stacked-column" style="height: {{ self.sucursal|floatformat:0 }}%; background-color: {{ self.claseCoste.color }}">
+                                        {% if self.sucursal > 15 %}
+                                            <p><span>{{ self.sucursal }}%</span></p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <P>SUC</P>
+                            </div>
+                        </div>
+                        <div class="category">
+                            <ul>
+                                {% for self in costos_ventas %}
+                                    <li style="border-left: solid 40px {{ self.claseCoste.color }};">{{ self.claseCoste }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-7" style="border-left: 1px solid #CCC;">
+                        <article class="row">
+                            <div class="col-md-8">
+                                <article style="height: 190px; border-bottom: 1px solid #CCC;">
+                                    <div class="stacked-title text-marron">
+                                        DISTRIBUCIÓN SECUNDARIA
+                                        <span style="display: block;">
+                                            <b>
+                                                {% for foo in costo_distr_sec %}
+                                                    {{ foo.gasto|floatformat:1 }} CLP/KG
+                                                {% endfor %}
+                                            </b>
+                                        </span>
+                                        <div id="grafico_distr_sec">
+                                            <div id="distr_sec_graph" style="width: 100%; height: 400px; margin: 0 auto"></div>
+                                        </div>
+                                    </div>
+                                </article>
+                                <article style="margin-top: 10px;">
+                                    <div class="stacked-title text-marron">MERCHANDISING (% GASTO/VENTA)
+                                        <span style="display: block;">
+                                            <b>
+                                                {{ total_merchandising|floatformat:2 }}%
+                                            </b>
+                                        </span>
+                                        <div id="grafico_merchandising">
+                                            <div id="merchandising_graph" style="width: 100%;  margin: 0 auto"></div>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                            <div class="col-md-4" style="border-left: 1px solid #CCC;">
+                                <div class="stacked-title text-marron">
+                                    APORTES <span style="display: block;"><b>{{ total_aporte|floatformat:2 }}%</b></span>
+                                </div>
+                                <div class="stacked">
+                                    {% for foo in costos_aporte %}
+                                        <div class="stacked-column" style="height: {{ foo.peso|floatformat:0 }}%;">
+                                            <p>
+                                                {% if foo.peso > 15 %}
+                                                    {{ foo.claseCoste.seudo }} <span>{{ foo.costo|floatformat:2 }}%</span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="filtros" style="margin-top: 10px;">
+        {% if periodo_anterior %}
+            <div class="pull-left">
+                <a href="{% url 'eerr_filtro' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+            </div>
+        {% else %}
+            <div class="pull-left">
+                <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+            </div>
+        {% endif %}
+        {% if periodo_posterior %}
+            <div class="pull-left" style="margin-left: 10px;">
+                <a href="{% url 'eerr_filtro' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+            </div>
+        {% else %}
+            <div class="pull-right" style="margin-left: 10px;">
+                <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/highcharts/js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}js/graficos.js"></script>
+    <script>
+        $("#menu_home").addClass('active');
+    </script>
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es-CL" >
+    <head>
+        <title>Gestión ventas | Sistemas</title>
+        <link rel="stylesheet" href="{{ STATIC_URL }}plugins/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="{{ STATIC_URL }}plugins/font-awesome/css/font-awesome.min.css"/>
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/base.css" />
+        <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/login.css" />
+        <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/ie.css" /><![endif]-->
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/customize.css"/>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+        <meta name="robots" content="NONE,NOARCHIVE" />
+    </head>
+    <body class=" login">
+        <div id="container">
+            <div id="header">
+                <div id="branding">
+                    <h1 id="site-name">
+                        <div class="container">
+                            <a href=""><img width="120" src="{{ STATIC_URL }}img/logo_header.png" alt="Agrosuper"/></a>
+                        </div>
+                    </h1>
+                </div>
+             </div>
+            <div id="content" class="colM container-fluid" style="margin-top: 0;">
+                <div class="col-md-12">
+                    <div id="content-main">
+                        <form method="post" id="login-form">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <label class="required" for="id_username">Nombre de usuario:</label> <input id="id_username" maxlength="254" name="username" type="text" />
+                            </div>
+                            <div class="form-row">
+                                <label class="required" for="id_password">Contraseña:</label> <input id="id_password" name="password" type="password" />
+                            </div>
+                            <div class="form-row">
+                                <a href="{% url 'password_reset' %}">Olvido su contraseña?</a>
+                            </div>
+                            <div class="submit-row">
+                                <label>&nbsp;</label><input type="submit" value="Iniciar sesión" style="float: right;" class="btn btn-success" />
+                            </div>
+                        </form>
+                        <script type="text/javascript">
+                            document.getElementById('id_username').focus()
+                        </script>
+                    </div>
+                </div>
+                <br class="clear" />
+            </div>
+            <div id="footer">
+
+            </div>
+        </div>
+
+        <script src="{{ STATIC_URL }}admin/js/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+            });
+        </script>
+    </body>
+</html>

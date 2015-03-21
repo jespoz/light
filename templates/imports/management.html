@@ -1,0 +1,108 @@
+{% extends 'maqueta.html' %}
+
+{% block title %}Administrador de reportes{% endblock %}
+
+{% block content_12 %}
+    <div class="container-fluid">
+        {% for infografia in infografias %}
+            <section>
+                <div>
+                    <h5 class="text-verde">{{ infografia.infografia }} <span class="pull-right label label-success">Esta infografía se genera de forma {{ infografia.tipoPeriodo }}</span></h5>
+                </div>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <th>Reporte</th>
+                        <th>SAP</th>
+                        <th>Matriz</th>
+                        <th>Upload</th>
+                        <th>Periodo</th>
+                        <th>Comprobación</th>
+                        <th>Subir</th>
+                        <th>Status</th>
+                    </thead>
+                    <tbody>
+                        {% for self in reportes %}
+                            {% if infografia.infografia == self.infografia.infografia %}
+                                <form id="form-{{ self.id }}" class="form" action="{% url 'import' pk=self.id %}" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <tr>
+                                        <td>{{ self.reporte }}</td>
+                                        <td class="text-center"><a href="{{ self.sap }}" target="_blank"><img src="{{ STATIC_URL }}img/sap_icon.png" alt="Reporte en SAP" width="40"/></a></td>
+                                        <td class="text-center"><a href="{{ MEDIA_URL }}{{ self.matriz }}" target="_blank"><i class="fa fa-download fa-lg"></i></a></td>
+                                        <td>
+                                            <input id="file-{{ self.id }}" type="file" class="file" name="archivo" data-id="{{ self.id }}"/>
+                                            <div id="tooltipFile-{{ self.id }}" class="tooltip bottom" role="tooltip">
+                                                <div class="tooltip-arrow"></div>
+                                                <div class="tooltip-inner">
+                                                    Subir Archivo
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <select name="periodo" class="periodo" data-id="{{ self.id }}" id="periodo-{{ self.id }}">
+                                                {% for periodo in periodos %}
+                                                    {% if self.infografia.tipoPeriodo.id == periodo.tipoPeriodo.id %}
+                                                        <option value="{{ periodo.id }}">{{ periodo.periodo }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <option value="0" selected="selected"> </option>
+                                            </select>
+                                            <div id="tooltipPeriodo-{{ self.id }}" class="tooltip bottom" role="tooltip">
+                                                <div class="tooltip-arrow"></div>
+                                                <div class="tooltip-inner">
+                                                    Seleccionar Periodo
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center container-fluid">
+                                            <div class="col-md-6">
+                                                <span class="label label-danger comp-archivo" id="comp-archivo-{{ self.id }}">archivo</span>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <span class="label label-danger comp-periodo" id="comp-periodo-{{ self.id }}">periodo</span>
+                                            </div>
+                                        </td>
+                                        <td><button type="button" data-id="{{ self.id }}" id="button-{{ self.id }}" class="btn btn-xs" disabled="disabled">Cargar</button></td>
+                                        <td class="text-center"><i class="fa fa-circle" id="circle-status-{{ self.id }}"></i></td>
+                                    </tr>
+                                </form>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        {% endfor %}
+    </div>
+    <div>
+        <div class="col-md-12" id="info">
+            <span class="pull-left text-verde"><i class="fa fa-circle text-verde"></i> Se puede cargar</span>
+            <br/>
+            <span class="pull-left text-rojo"><i class="fa fa-circle text-rojo"></i> Periodo ya cargado</span>
+        </div>
+    </div>
+    <div id="back-message-loading" class="modal-backdrop fade hidden">
+        <div>
+            <img src="{{ STATIC_URL }}img/ajax-loader.gif" alt="" width="50"/>
+            <span>CARGANDO DATOS, POR FAVOR ESPERE...</span>
+        </div>
+    </div>
+    <div id="back-message" class="modal-backdrop fade hidden"></div>
+    <div class="modal fade" id="modal-message">
+        <h1><i class="fa fa-info-circle"></i> Información</h1>
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p id="message"></p>
+        <div id="confirmButtons">
+            <a href="" class="btn btn-sm btn-success" id="boton-aceptar">Aceptar</a>
+            <a href="" class="btn btn-sm btn-danger" id="boton-cancelar">Cancelar</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}js/management.js"></script>
+    <script src="{{ STATIC_URL }}js/papaparse.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $("#menu_reports").addClass('active');
+    </script>
+{% endblock %}

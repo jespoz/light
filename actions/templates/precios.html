@@ -1,0 +1,149 @@
+{% extends 'maqueta.html' %}
+{% load humanize %}
+
+{% block title %}Accionables Precios{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/dataTable/media/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/estado_resultado.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/accionables.css"/>
+{% endblock %}
+
+{% block content_12 %}
+    <div class="container-fluid">
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#descuentos" aria-controls="descuentos" role="tab" data-toggle="tab">Descuentos</a>
+                </li>
+                <li role="presentation">
+                    <a href="#preciopromedio" aria-controls="preciopromedio" role="tab" data-toggle="tab">Precio Promedio</a>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="filtros">
+                {% if periodo_anterior %}
+                    <div class="pull-left">
+                        <a href="{% url 'accionables_precios' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+                    </div>
+                {% else %}
+                    <div class="pull-left">
+                        <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+                    </div>
+                {% endif %}
+                {% if periodo_posterior %}
+                    <div class="pull-left" style="margin-left: 10px;">
+                        <a href="{% url 'accionables_precios' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+                    </div>
+                {% else %}
+                    <div class="pull-left" style="margin-left: 10px;">
+                        <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+                    </div>
+                {% endif %}
+                <span class="periodo">
+                    {% for p in periodo %}
+                        {{ p.periodo__periodo }}
+                    {% endfor %}
+                </span>
+                <div class="pull-right">
+                    <a href="#information" data-toggle="modal" class="btn btn-success btn-xs"><i class="fa fa-info-circle" style="padding-right: 5px;"></i>Información</a>
+                    <div class="modal fade" id="information" role="dialog">
+                        <div class="modal-dialog" style="z-index: 9999;">
+                            <p class="alert alert-info">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor eveniet exercitationem incidunt ipsam molestias officia praesentium, reprehenderit rerum sit temporibus ut vitae voluptates? Architecto, provident rerum. Ad, alias, magnam.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div role="tabpanel" class="tab-pane active" id="descuentos">
+                <div class="col-md-6">
+                    <div id="graph-crudo" style="min-width: 310px; height: 350px; max-width: 100%; margin: 0 auto"></div>
+                    <button class="btn btn-success" id="btn_crudos" data-periodo="{{ periodo_id }}"><i class="fa fa-search"></i> Ver Detalle</button>
+                </div>
+                <div class="col-md-6">
+                    <div id="graph-procesado" style="min-width: 310px; height: 350px; max-width: 100%; margin: 0 auto"></div>
+                    <button class="btn btn-success" id="btn_procesados" data-periodo="{{ periodo_id }}"><i class="fa fa-search"></i> Ver Detalle</button>
+                </div>
+                <div class="col-md-12">
+                    <hr/>
+                    <article class="container-fluid margin_top_20">
+                        <div id="tabla_material" class="hidden">
+                            <h4>N° de facturas semanales hechas por sobre y bajo precio vigente.</h4>
+                            <table class="table table-bordered table-striped table-hover" id="ver">
+                                <thead>
+                                    <tr>
+                                        <th>Sector</th>
+                                        <th>Cod Material</th>
+                                        <th>Material</th>
+                                        <th>Con descto</th>
+                                        <th>Sin descto</th>
+                                        <th>Sobreprecio</th>
+                                        <th>Ver</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="body_table">
+                                    <tr>
+                                        <td><button class="apertura">Click</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane active" id="preciopromedio"></div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <div class="container margin_top_20">
+                    <h4 id="tituloModal">Detalle de locales con descuento en ...</h4>
+                    <div class="margin_top_20">
+                        <table id="listado" class="table table-bordered table-striped tabler-hover table-responsive">
+                            <thead>
+                                <tr>
+                                    <th class="primera_cab" colspan="6"></th>
+                                    <th colspan="8">Unidades x Transacción</th>
+                                </tr>
+                                <tr>
+                                    <th>Supervisor</th>
+                                    <th>Preventa</th>
+                                    <th>Cod. Local</th>
+                                    <th>Cliente Local</th>
+                                    <th>Categoria</th>
+                                    <th>Responsable</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>4</th>
+                                    <th>5</th>
+                                    <th>5 a 10</th>
+                                    <th>11 a 20</th>
+                                    <th> >20 </th>
+                                </tr>
+                            </thead>
+                            <tbody id="apertura_tabla_modal"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/highcharts/js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/media/js/jquery.dataTables.min.js"></script>
+    <script src="{{ STATIC_URL }}admin/js/jquery.base64.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/media/js/tableExport.js"></script>
+    <script src="{{ STATIC_URL }}js/accionable_precio.js"></script>
+    <script>
+        $("#menu_formula_ingreso").addClass('active');
+    </script>
+{% endblock %}

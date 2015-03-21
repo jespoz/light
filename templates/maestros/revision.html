@@ -1,0 +1,93 @@
+{% extends 'maqueta.html' %}
+
+{% block title %}Revisión de maestros{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/revision.css"/>
+{% endblock %}
+
+{% block content_12 %}
+    <div class="container-fluid">
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#locales" aria-controls="revision_locales" role="tab" data-toggle="tab">Revisión Locales</a>
+                </li>
+                <!--<li role="presentation">
+                    <a href="#otro" aria-controls="otro" role="tab" data-toggle="tab">Otro</a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="locales">
+                <h3>Locales con venta y sin información en nuestros maestros</h3>
+                <section class="col-md-6">
+                    <button id="generar_no_clientes" class="btn btn-success pull-left"><i class="fa fa-cogs"></i> Generar Listado</button>
+                    <div id="dvData" class="hidden">
+                        <table id="copiable" class="table table-bordered table-striped">
+                            <thead>
+                                <th>Codigo</th>
+                            </thead>
+                            <tbody id="contenido_nulos"></tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <span id="salida" class="alert alert-danger hidden"></span>
+                        <a id="csv" href="javascript:void(0);" class="hidden btn btn-primary pull-right"><i class="fa fa-file-text"></i> Generar csv</a>
+                    </div>
+                </section>
+                <section class="col-md-6">
+                    <table class="table table-bordered table-striped" style="width: 100%; margin-top: 20px;">
+                        <thead>
+                            <th>Transacción</th>
+                            <th>Matriz</th>
+                            <th>Upload</th>
+                            <th>Subir</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center">SE16 (KNA1)</td>
+                                <td class="text-center">
+                                    <a href="{{ MEDIA_URL }}matrices/locales.csv" target="_blank">
+                                        <i class="fa fa-download fa-lg"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <form class="form" method="POST" action="{% url 'import_file' %}" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <input type="file" id="kna1" name="archivo"/>
+                                    </form>
+                                </td>
+                                <td>
+                                    <button type="button" id="button-kna1" class="btn btn-xs" disabled="">Cargar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </div>
+    <div id="back-message" class="modal-backdrop fade hidden"></div>
+    <div class="modal fade" id="modal-message">
+        <h1><i class="fa fa-info-circle"></i> Información</h1>
+        <button type="button" class="close" id="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <p id="message"></p>
+        <div id="confirmButtons">
+            <a href="" class="btn btn-sm btn-success" id="boton-aceptar">Aceptar</a>
+            <a href="" class="btn btn-sm btn-danger" id="boton-cancelar">Cancelar</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/media/js/jquery.dataTables.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/extensions/TableTools/js/dataTables.tableTools.js"></script>
+    <script src="{{ STATIC_URL }}js/papaparse.min.js"></script>
+    <script src="{{ STATIC_URL }}js/revision_maestro.js"></script>
+    <script>
+        $("#menu_revision_maestro").addClass('active');
+    </script>
+{% endblock %}

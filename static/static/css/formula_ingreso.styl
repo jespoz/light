@@ -1,0 +1,382 @@
+blanco = #FFF
+marron = #AC291F
+verde = #4D9379
+naranjo = #E3713B
+amarillo = #E5C730
+cafe = #86663E
+gris = #5D5D5D
+
+hr
+    margin-bottom 5px
+rect
+    &:last-child
+        fill naranjo
+
+#info_formula_ingreso
+    font-family "Open Sans", sans-serif
+    font-size 14px
+    background #fcfff4 /* Old browsers */
+    background -moz-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%) /* FF3.6+ */
+    background -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#fcfff4), color-stop(40%, #ebf1e2), color-stop(100%, #ececec)); /* Chrome,Safari4+ */
+    background -webkit-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* Chrome10+,Safari5.1+ */
+    background -o-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* Opera 12+ */
+    background -ms-radial-gradient(center, ellipse cover, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* IE10+ */
+    background radial-gradient(ellipse at center, #fcfff4 0%, #ebf1e2 40%, #ececec 100%); /* W3C */
+    padding-bottom 30px
+    h1, h2
+        color blanco
+        text-shadow #666 2px 2px 2px
+
+#section_precio
+    .box-header
+        background-color naranjo
+    .box-body
+        border-bottom solid 1px naranjo
+
+#section_locales
+    .box-header
+        background-color amarillo
+    .box-body
+        border-bottom solid 1px amarillo
+
+#section_frecuencia
+    .box-header
+        background-color verde
+    .box-body
+        border-bottom solid 1px verde
+        table
+            height auto
+            thead
+                tr
+                    th
+                        &:first-child
+                            background-color transparent
+            tbody
+                tr
+                    height 70px
+                    &:nth-child(1)
+                        border-bottom 1px solid naranjo
+                        border-left 10px solid naranjo
+                    &:nth-child(2)
+                        border-bottom 1px solid verde
+                        border-left 10px solid verde
+                    &:nth-child(3)
+                        border-bottom 1px solid marron
+                        border-left 10px solid marron
+                    &:nth-child(4)
+                        border-bottom 1px solid cafe
+                        border-left 10px solid cafe
+                    &:nth-child(5)
+                        border-bottom 1px solid gris
+                        border-left 10px solid gris
+                    td
+                        color gris
+                        font-size 20px
+                        &:first-child
+                            font-size 10  px
+
+#section_ticket
+    .box-header
+        background-color cafe
+    .box-body
+        border-bottom solid 1px cafe
+        .dias
+            text-align center
+            width 100%
+            div.titulo
+                background-color cafe
+                color blanco
+                display block
+                height 20px
+                width 100%
+                &.procesado
+                    position absolute
+                    margin-top 150px
+        .panel
+            background-color transparent
+            margin-top 20px
+            .panel-heading
+                background-color cafe
+                color blanco
+                text-align center
+            .panel-body
+                padding 0
+                div.dd
+                    color blanco
+                    height 100px
+                    padding-top 20px
+                    text-align center
+                    width 16.6%
+                    &:nth-child(1)
+                        background-color naranjo
+                    &:nth-child(2)
+                        background-color amarillo
+                    &:nth-child(3)
+                        background-color verde
+                    &:nth-child(4)
+                        background-color marron
+                    &:nth-child(5)
+                        background-color cafe
+                    &:nth-child(6)
+                        background-color gris
+                        width 16.9%
+
+#sucursal
+    h2
+        color marron
+
+#ventas
+    height 120px
+    canvas
+        margin auto
+        position inherit
+    h3
+        color naranjo
+        font-family "Open Sans Light", sans-serif
+        font-size 1.5em
+        margin-bottom 0
+        text-align center
+        text-shadow 2px 2px 2px #666
+        &.valor
+            color gris
+            margin-top 0
+    h5
+        margin-bottom -10px
+        text-align center
+    .chart
+        display block
+    .col-md-4
+        padding 0
+    .col-md-5
+        height 120px
+        padding 0
+        div
+            margin-top 30%
+    .valor_porc
+        display block
+        font-family "Open Sans Light", sans-serif
+        font-size 20px
+        position relative
+        top 55px
+        text-align center
+    .danger
+        color marron
+    .success
+        color verde
+
+.banner_fi
+    font-family "Open Sans", sans-serif
+    height 400px
+    margin-top 5px
+    width 100%
+    .box-header
+        float left
+        height 400px
+        width 20%
+        article
+            div
+                &.col-md-6
+                    color blanco
+                    padding-left 5px
+                    padding-right 5px
+                    text-align center
+                    h3
+                        font-family "Open Sans Light", sans-serif
+                        margin-top 5px
+                    h4
+                        margin-top 0
+                    i
+                        font-size 3em
+                    &:first-child
+                        border-right solid blanco 1px
+        h1
+            margin-top 10px
+            text-align center
+        h4
+            color blanco
+            text-align center
+        h5
+            color blanco
+            text-align center
+        hr
+            border-style solid
+            border-color blanco
+            margin auto
+            width 90%
+        .title
+            padding-top 15px
+    .box-body
+        float left
+        height 400px
+        width 80%
+        article
+            float left
+            height 370px
+            padding-right 2px
+        aside
+            height 20px !important
+            width 100% !important
+            &.tradicional
+                background-color naranjo !important
+                color blanco
+                &:before
+                    border-color naranjo transparent !important
+                &:after
+                    border-color transparent naranjo !important
+            &.supermercados
+                background-color amarillo !important
+                color blanco
+                &:before
+                    border-color amarillo transparent !important
+                &:after
+                    border-color transparent amarillo !important
+            &.grandes
+                background-color marron !important
+                color blanco
+                &:before
+                    border-color marron transparent !important
+                &:after
+                    border-color transparent marron !important
+            &.industriales
+                background-color verde !important
+                color blanco
+                &:before
+                    border-color verde transparent !important
+                &:after
+                    border-color transparent verde !important
+            &.foodservice
+                background-color cafe !important
+                color blanco
+                &:before
+                    border-color cafe transparent !important
+                &:after
+                    border-color transparent cafe !important
+            &.otros
+                background-color gris !important
+                color blanco
+                &:before
+                    border-color gris transparent !important
+                &:after
+                    border-color transparent gris !important
+            &:before
+                border-width 20px 0 20px 5px
+                height 10px
+                left -10px
+            &:first-child
+                &:before
+                    border-width 10px 0 10px 10px !important
+                    height 20px !important
+                &:after
+                    border-width 10px 0 10px 10px !important
+                    height 20px !important
+        table
+            height 330px
+            border-right dashed 1px #CCC
+            border-bottom dashed 1px #CCC
+            border-left none
+            border-top none
+            margin-top 10px
+            th
+                background none
+                border none
+                height 20px
+                padding 2px 5px !important
+                text-align center
+                font-family "Open Sans", sans-serif
+                font-weight 300
+                &:nth-last-child(1)
+                    background-color verde
+                    color blanco
+                &:nth-last-child(2)
+                    background-color amarillo
+                    color blanco
+                &:nth-last-child(3)
+                    background-color naranjo
+                    color blanco
+            td
+                border dashed 1px #CCC
+                min-width 20%
+                padding 2px 5px !important
+                text-align center
+                vertical-align middle
+                &:first-child
+                    border-left none
+                    text-align left
+
+.footer
+    i
+        float left !important
+        font-size inherit !important
+        padding-top 3px
+
+.graf-loc
+    height 70%
+    .col-md-5
+        height 100%
+        padding-left 0
+        padding-top 10px
+        padding-right 0
+        i
+            float left !important
+            font-size 1.7em !important
+            line-height 30px
+    .col-md-7
+        height 100%
+        padding-left 0
+        padding-top 10px
+        padding-right 0
+        h6
+            text-align right
+        i
+            font-size 50px !important
+            left 0
+            padding-top 10px
+            margin-left 10px
+            position absolute
+            &:first-child
+                padding-top 20px
+        p
+            font-size 30px
+            font-weight bold
+            text-align right
+        .locales
+            color verde
+        .nuevos
+            color amarillo
+        .recuperados
+            color naranjo
+
+.graf-fug
+    height 20%
+    .col-md-5
+        i
+            float left !important
+            font-size 35px !important
+            padding-top 20px
+        span
+            float left
+            font-size 25px !important
+            margin-left 5px
+            padding-top 20px
+    .col-md-7
+        height 100%
+        padding-left 0
+        padding-top 5px
+        padding-right 0
+        h6
+            text-align right
+            margin-bottom 0
+        i
+            font-size 50px !important
+            left 0
+            padding-top 10px
+            margin-left 10px
+            position absolute
+        p
+            font-size 30px
+            font-weight bold
+            text-align right
+
+.gris
+    border-color gris -moz-use-text-color -moz-use-text-color
+    border-style dotted

@@ -1,0 +1,272 @@
+button {
+  background-color: #4d9379 !important;
+  border-color: #4d9379 !important;
+  float: left;
+  margin-top: 20px;
+  width: 100%;
+}
+h1 {
+  color: #4d9379;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  margin-top: 0;
+}
+hr {
+  border-style: solid;
+  border-color: #ddd;
+}
+p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+}
+table {
+  border-bottom: 1px solid #ddd !important;
+  float: left;
+  margin-top: 20px;
+}
+table thead th {
+  border: 1px solid #ddd !important;
+  color: #4d9379;
+  padding: 8px !important;
+  text-align: center !important;
+}
+table tbody tr td {
+  padding-right: 20px !important;
+  text-align: right;
+}
+table tbody tr td:first-child {
+  color: #4d9379;
+  text-align: left !important;
+}
+#contenedor_list {
+  margin-top: 30px;
+}
+#csv {
+  margin-left: 20px;
+}
+#csv i {
+  color: #fff;
+  font-size: 12px;
+  position: inherit;
+}
+#descuentos {
+  margin-bottom: 30px;
+}
+#descuentos .col-md-6:first-child {
+  border-right: solid 1px #4d9379;
+}
+#descuentos button {
+  margin-top: 0;
+}
+#generar i {
+  color: #fff;
+  position: inherit;
+}
+#generar span {
+  margin-left: 10px;
+}
+#listado_info,
+#listado_length,
+#listado_filter,
+#listado_paginate {
+  color: #4d9379;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300 !important;
+}
+#listado_info label,
+#listado_length label,
+#listado_filter label,
+#listado_paginate label {
+  font-weight: 300 !important;
+}
+#listado_paginate .disabled {
+  color: #5d5d5d !important;
+}
+#listado_paginate .next {
+  color: #4d9379 !important;
+}
+#listado_paginate .next:hover {
+  text-decoration: underline !important;
+}
+#listado_paginate .paginate_button {
+  background: none;
+  border: none;
+  color: #006064 !important;
+}
+#listado_paginate .paginate_button:hover {
+  text-decoration: underline !important;
+}
+#listado_paginate .paginate_button.current {
+  color: #ac291f !important;
+  font-weight: 500 !important;
+}
+#listado_paginate .paginate_button.current:hover {
+  cursor: default;
+  text-decoration: none !important;
+}
+#listado_wrapper {
+  padding-top: 20px;
+}
+#tabla_material {
+  width: 100%;
+}
+#tabla_material h4 {
+  color: #4d9379;
+  font-family: "Open Sans", sans-serif !important;
+  font-weight: 300 !important;
+  text-align: center;
+}
+#tabla_material table td {
+  text-align: center;
+}
+#tabla_material table td:first-child {
+  text-align: center;
+}
+#tabla_material table td.ultimo {
+  color: #4d9379;
+  padding: 5px 20px;
+  text-align: center;
+}
+#tabla_material table td.ultimo button {
+  background-color: #e3713b !important;
+  border-color: #e3713b !important;
+}
+#ver thead tr {
+  background: url("../admin/img/nav-bg.gif") repeat-x scroll left top #e1e1e1 !important;
+}
+.box_client {
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px;
+}
+.box_client hr {
+  border-color: #fff;
+  border-style: solid;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.box_client img {
+  float: left;
+}
+.box_client section {
+  color: #fff;
+  display: inline-block;
+  float: left;
+  font-size: 16px;
+}
+.box_client section.local {
+  border-right: solid 1px #fff;
+  text-align: center;
+  padding-right: 10px;
+  width: 40%;
+}
+.box_client section.local small {
+  display: block;
+  text-align: center;
+}
+.box_client section.venta {
+  text-align: center;
+  width: 60%;
+}
+.box_client section.venta small {
+  display: block;
+  text-align: center;
+}
+.box_client section.vista {
+  display: block;
+}
+.box_client section.vista i {
+  color: #fff;
+}
+.box_client .header {
+  color: #fff;
+  font-family: "Open Sans", sans-serif !important;
+  font-weight: 300 !important;
+  text-align: right;
+}
+.close {
+  background-color: transparent !important;
+  margin-top: 20px;
+  margin-right: 20px;
+  width: inherit;
+}
+.filtros {
+  margin-top: 20px;
+}
+.highcharts-grid path:first-child {
+  stroke: #e5c730;
+  stroke-width: 3;
+}
+.highcharts-title {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+.label-danger {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+}
+.modal-backdrop {
+  z-index: 0;
+}
+.modal-dialog {
+  overflow: auto;
+  width: 90%;
+}
+.modal-dialog .container {
+  margin-bottom: 20px;
+}
+.modal-dialog .container h4 {
+  color: #4d9379;
+  font-family: "Open Sans", sans-serif !important;
+  font-weight: 300 !important;
+  text-align: center;
+}
+.modal-dialog .container table thead tr {
+  background: url("../admin/img/nav-bg.gif") repeat-x scroll left top #e1e1e1 !important;
+}
+.modal-dialog .container table thead tr th {
+  color: #e3713b;
+}
+.modal-dialog .container table thead tr:first-child {
+  background: none !important;
+  border-top: solid 1px #fff !important;
+  border-left: solid 1px #fff !important;
+}
+.modal-dialog .container table thead tr:first-child th {
+  color: #e3713b;
+}
+.modal-dialog .container table tbody td {
+  text-align: center;
+}
+.nav-tabs a {
+  color: #4d9379 !important;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+.nav-tabs li {
+  margin-bottom: -2px;
+}
+.nav-tabs li.active a {
+  border-top: solid !important;
+}
+.periodo {
+  color: #ac291f;
+  font-family: "Open Sans", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+}
+.primera_cab {
+  color: transparent !important;
+}
+.table-responsive table thead tr {
+  background: url("../admin/img/nav-bg.gif") repeat-x scroll left top #e1e1e1 !important;
+}
+.table-responsive table tbody tr td {
+  text-align: center;
+}

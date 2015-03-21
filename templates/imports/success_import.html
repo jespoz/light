@@ -1,0 +1,14 @@
+{% extends 'maqueta.html' %}
+
+{% block title %}Administrador de reportes{% endblock %}
+
+{% block content_12 %}
+    <h3><div class="alert alert-info"><i class="fa fa-info-circle"></i> {{ mensaje }}</div></h3>
+
+{% endblock %}
+
+{% block extra_script %}
+    <script>
+        $("#menu_reports").addClass('active');
+    </script>
+{% endblock %}

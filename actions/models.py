@@ -1,0 +1,61 @@
+from django.db import models
+from master.models import Periodo, OficinaVentas, TipoCliente, CategoriaCliente, Sector
+
+
+class AccLocal(models.Model):
+    periodo = models.ForeignKey(Periodo)
+    oficina = models.ForeignKey(OficinaVentas)
+    tipoCliente = models.ForeignKey(TipoCliente)
+    codLocal = models.CharField(max_length=20)
+    clienteLocal = models.CharField(max_length=200)
+    categoria = models.ForeignKey(CategoriaCliente)
+    promedio = models.FloatField(default=0)
+    desviacion = models.FloatField(default=0)
+    minimo = models.IntegerField(default=0)
+    maximo = models.IntegerField(default=0)
+    ventaPromedio = models.FloatField(default=0)
+    semCalculo = models.IntegerField(default=0)
+    supervisor = models.CharField(max_length=200, default='', null=True, blank=True)
+    preventa = models.CharField(max_length=200, default='', null=True, blank=True)
+    sector = models.ForeignKey(Sector, default='', null=True, blank=True)
+
+class AnalisisDescuentoTotales(models.Model):
+    periodo = models.ForeignKey(Periodo)
+    oficina = models.ForeignKey(OficinaVentas)
+    sector = models.ForeignKey(Sector)
+    codigoMaterial = models.IntegerField()
+    material = models.CharField(max_length=100)
+    conDescuento = models.IntegerField()
+    sinDescuento = models.IntegerField()
+    sobreprecio = models.IntegerField()
+
+class AnalisisDescuentoApertura(models.Model):
+    periodo = models.ForeignKey(Periodo)
+    oficina = models.ForeignKey(OficinaVentas)
+    supervisor = models.CharField(max_length=200, default='', null=True, blank=True)
+    preventa = models.CharField(max_length=200, default='', null=True, blank=True)
+    codLocal = models.CharField(max_length=20)
+    clienteLocal = models.CharField(max_length=200)
+    categoria = models.ForeignKey(CategoriaCliente)
+    sector = models.ForeignKey(Sector)
+    codigoMaterial = models.IntegerField()
+    material = models.CharField(max_length=100)
+    negocio = models.CharField(max_length=100)
+    responsable = models.CharField(max_length=100)
+    uno = models.FloatField(default=0)
+    dos = models.FloatField(default=0)
+    tres = models.FloatField(default=0)
+    cuatro = models.FloatField(default=0)
+    cinco = models.FloatField(default=0)
+    seisAdiez = models.FloatField(default=0)
+    onceAveinte = models.FloatField(default=0)
+    mayorVeinte = models.FloatField(default=0)
+
+class Dispersion(models.Model):
+    periodo = models.ForeignKey(Periodo)
+    oficina = models.ForeignKey(OficinaVentas)
+    responsable = models.CharField(max_length=100)
+    negocio = models.CharField(max_length=100)
+    unidad = models.IntegerField(default=0)
+    diferencia = models.FloatField(default=0)
+    material = models.CharField(max_length=100, default='', null=True, blank=True)

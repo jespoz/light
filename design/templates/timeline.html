@@ -1,0 +1,96 @@
+{% extends 'maqueta.html' %}
+{% load humanize %}
+
+{% block title %}Timeline{% endblock %}
+
+{% block extrastyle %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/timelineSmartAdmin.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/ionicons/css/ionicons.min.css"/>
+{% endblock %}
+
+{% block content_9 %}
+    <div class="well well-sm">
+        <div class="smart-timeline">
+                <ul class="smart-timeline-list">
+                    {% for self in timeline %}
+                        <li>
+                            <div class="smart-timeline-icon">
+                                <i class="fa fa-{{ self.reporte.icono }}"></i>
+                            </div>
+                            <div class="smart-timeline-time">
+                                <span>{{ self.actualizacion|date:"d M"|naturalday }}</span>
+                            </div>
+                            <div class="smart-timeline-content">
+                                <div class="content well" style="padding-left: 0;">
+                                    <div class="container-fluid">
+                                        <div class="col-md-3">
+                                            <img class="img-responsive" src="{{ STATIC_URL }}img/{{ self.reporte.icono }}.png" alt=""/>
+                                            <br/>
+                                            <span class="{% for v in self.valor %}{% if v.resultado < 0 %}text-danger{% else %}text-verde{% endif %}{% endfor %}" id="porcentaje">{% for v in self.valor %}{{ v.resultado }}{% endfor %}%</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <h4>{{ self.reporte|upper }}</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio ea necessitatibus quo velit natus cupiditate qui alias possimus ab praesentium nostrum quidem obcaecati nesciunt! Molestiae officiis voluptate excepturi rem veritatis eum aliquam qui laborum non ipsam ullam tempore reprehenderit illum eligendi cumque mollitia temporibus! Natus dicta qui est optio rerum.</p>
+                                        </div>
+                                    </div>
+                                    <div class="smart-timeline-footer row">
+                                        <span class="pull-left">
+                                            <a class="tooltip-a" href="javascript:void(0);">
+                                                <i class="ion-ios-information-outline"></i>
+                                                <img class="callout" src="{{ STATIC_URL }}img/callout.gif" />
+                                                <span class="tooltip">
+                                                    <article class="container-fluid">
+                                                        <p><span class="col-md-4"><b>Analista:</b></span> <span class="col-md-8">{{ self.analista.first_name }} {{ self.analista.last_name }}</span></p>
+                                                        <p><span class="col-md-4"><b>Actualización:</b></span> <span class="col-md-8">{{ self.actualizacion|date:"d/m/Y h:m:s" }}</span></p>
+                                                        <p><span class="col-md-4"><b>Periodo:</b></span> <span class="col-md-8">{{ self.periodo }}</span></p>
+                                                    </article>
+                                                </span>
+                                            </a>
+                                        </span>
+                                        <span class="pull-right">
+                                            <a href="{% url self.reporte.url_django pk=self.periodo.id %}">VER DETALLE...</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <li class="text-center">
+                        <a href="javascript:void(0)" class="btn btn-sm btn-default"><i class="fa fa-arrow-down text-muted"></i> LEER MAS</a>
+                    </li>
+                </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block prioridades %}
+    {% for self in prioridad %}
+        <article class="panel panel-primary">
+            {% for v in self.valor %}
+                <div class="panel-heading">
+                    <span class="pull-left"><i class="fa fa-{{ self.reporte.icono }}"></i></span>
+                    {{ self.reporte|upper }}
+                </div>
+                <div class="panel-body">
+                    <span class="pull-left">
+                        <div id="graph-acum-{{ self.reporte.id }}" class="graph-acum" data-id="{{ self.reporte.id }}"></div>
+                    </span>
+                    <span class="pull-right periodo">
+                        <p>{{ v.periodo }}</p>
+                        <span class="result">{{ v.resultado }}%</span>
+                    </span>
+                </div>
+            {% endfor %}
+        </article>
+    {% endfor %}
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/highcharts/js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}js/timeline.js"></script>
+    <script src="{{ STATIC_URL }}js/tooltip.js"></script>
+    <script>
+        $("#menu_timeline").addClass('active');
+    </script>
+{% endblock %}

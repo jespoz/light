@@ -1,0 +1,141 @@
+{% extends 'maqueta.html' %}
+{% load humanize %}
+
+{% block title %}Accionables Nro Locales{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/ionicons/css/ionicons.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}plugins/dataTable/media/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/estado_resultado.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/accionables.css"/>
+{% endblock %}
+
+{% block content_12 %}
+    <div class="container-fluid">
+        <div role="tabpanel">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#compra_frecuente" aria-controls="compra_frecuente" role="tab" data-toggle="tab">Compra Frecuente</a>
+                </li>
+                <!--<li role="presentation">
+                    <a href="#otro" aria-controls="otro" role="tab" data-toggle="tab">Otro</a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="filtros">
+                {% if periodo_anterior %}
+                    <div class="pull-left">
+                        <a href="{% url 'accionables_locales' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+                    </div>
+                {% else %}
+                    <div class="pull-left">
+                        <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+                    </div>
+                {% endif %}
+                {% if periodo_posterior %}
+                    <div class="pull-left" style="margin-left: 10px;">
+                        <a href="{% url 'accionables_locales' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+                    </div>
+                {% else %}
+                    <div class="pull-left" style="margin-left: 10px;">
+                        <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+                    </div>
+                {% endif %}
+                <span class="periodo">
+                    {% for p in periodo %}
+                        {{ p.periodo__periodo }}
+                    {% endfor %}
+                </span>
+                <div class="pull-right">
+                    <a href="#information" data-toggle="modal" class="btn btn-success btn-xs"><i class="fa fa-info-circle" style="padding-right: 5px;"></i>Información</a>
+                    <div class="modal fade" id="information" role="dialog">
+                        <div class="modal-dialog" style="z-index: 9999;">
+                            <p class="alert alert-info">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt dolor eveniet exercitationem incidunt ipsam molestias officia praesentium, reprehenderit rerum sit temporibus ut vitae voluptates? Architecto, provident rerum. Ad, alias, magnam.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div role="tabpanel" class="tab-pane active" id="compra_frecuente">
+                <div class="col-md-12">
+                    <div class="pull-left">
+                        <h1>Locales no atendidos esta semana y con movimientos en semanas anteriores</h1>
+                    </div>
+                    <div class="pull-right">
+                        <h1 class="label label-danger">
+                           {% for a in adicional %}
+                                Venta Adicional {{ a.suma|floatformat:0|intcomma }} $M
+                           {% endfor %}
+                        </h1>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {% for self in totales %}
+                        <section class="box_client {{ self.tipoCliente__tipo|lower }}" data-periodo="{{ self.periodo__id }}" data-id="{{ self.tipoCliente__codigo }}" style="width: {{ ancho }}%;">
+                            <img src="{{ STATIC_URL }}img/{{ self.tipoCliente__tipo }}.png" width="20" alt=""/>
+                            <p class="header">{{ self.tipoCliente__tipo }}</p>
+                            <hr/>
+                            <section class="local">
+                                <small>Locales</small>
+                                <span>{{ self.dcount|intcomma }}</span>
+                            </section>
+                            <section class="venta">
+                                <small>Venta Prom.</small>
+                                {{ self.prom|floatformat:0|intcomma }} $M
+                            </section>
+                        </section>
+                    {% endfor %}
+                    <button id="generar" class="btn btn-primary hidden" type="button">
+                        <i class="fa fa-spinner fa-spin"></i>
+                        <span>Generar Listado</span>
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <th>Categoría Cliente</th>
+                            <th>Locales</th>
+                            <th>Vta. Prom</th>
+                        </thead>
+                        <tbody id="table-categories">
+                            <td colspan="3">Debe seleccionar un Tipo de Cliente</td>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="contenedor_list" class="table-responsive">
+                    <table id="listado" class="table table-bordered table-striped table-responsive hidden">
+                        <tr>
+                            <th>Supervisor</th>
+                            <th>Preventa</th>
+                            <th>Cod. Local</th>
+                            <th>Cliente Local</th>
+                            <th>Categoría</th>
+                            <th>Sector</th>
+                            <th>Promedio</th>
+                            <th>Mínimo</th>
+                            <th>Máximo</th>
+                            <th>Vta. Prom. $M</th>
+                            <th>Semanas</th>
+                        </tr>
+                        <tbody id="table-list"></tbody>
+                    </table>
+                </div>
+            </div>
+            <!--<div role="tabpanel" class="tab-pane" id="otro"></div>-->
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}js/accionable_local.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/media/js/jquery.dataTables.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}admin/js/jquery.base64.js"></script>
+    <script src="{{ STATIC_URL }}plugins/dataTable/media/js/tableExport.js"></script>
+    <script>
+        $("#menu_formula_ingreso").addClass('active');
+    </script>
+{% endblock %}

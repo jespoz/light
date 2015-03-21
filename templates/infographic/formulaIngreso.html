@@ -1,0 +1,464 @@
+{% extends 'maqueta.html' %}
+{% load humanize %}
+{% block title %}Fórmula de Ingreso{% endblock %}
+{% block extrastyle %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/estado_resultado.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/formula_ingreso.css"/>
+{% endblock %}
+{% block content_12 %}
+    <div class="container-fuid" id="periodo">
+        <div class="filtros">
+            {% if periodo_anterior %}
+                <div class="pull-left">
+                    <a href="{% url 'venta_filtro' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+                </div>
+            {% else %}
+                <div class="pull-left">
+                    <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+                </div>
+            {% endif %}
+            {% if periodo_posterior %}
+                <div class="pull-left" style="margin-left: 10px;">
+                    <a href="{% url 'venta_filtro' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+                </div>
+            {% else %}
+                <div class="pull-left" style="margin-left: 10px;">
+                    <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+                </div>
+            {% endif %}
+            <div class="pull-right">
+                <a href="#information" data-toggle="modal" class="btn btn-success btn-xs"><i class="fa fa-info-circle" style="padding-right: 5px;"></i>Información</a>
+                <div class="modal fade" id="information" role="dialog">
+                    <div class="modal-dialog" style="z-index: 9999;">
+                        <p class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <img style="display: block; width: 64px; margin-left: auto; margin-right: auto; margin-bottom: 20px;" src="data:image/png;base64,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"/>
+                            {% for foo in informacion %}
+                                {{ foo.descripcion }}
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="info_formula_ingreso" class="container-fluid">
+        <h1 class="text-center">FORMULA DE INGRESO</h1>
+        <h2 class="panel-title text-center">{% for pp in periodo %}{{ pp.periodo__periodo|upper }}{% endfor %}</h2>
+        <div id="sucursal">
+            <h2>
+                {% for of in perfil %}
+                    {% for n in of.oficina.all %}
+                        {{ n|upper }}
+                    {% endfor %}
+                {% endfor %}
+            </h2>
+        </div>
+        <hr/>
+        <section>
+            <section id="ventas">
+                <div class="col-md-6">
+                    <div class="col-md-3">
+                        <h5>SEM ANT</h5>
+                        <div class="chart" id="graph-kilos" data-percent="{% for self in totales %}
+                                    {{ self.var_kilo|floatformat:0|intcomma }}
+                                {% endfor %}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div style="margin: auto; height: 50px; padding-top: 20px; padding-bottom: 0px;">
+                            <h3>KILOS VENTA</h3>
+                            <h3 class="valor">
+                                {% for self in totales %}
+                                    {{ self.kilo|floatformat:0|intcomma }} TON
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>ULT 6 SEM</h5>
+                        <div>
+                            <div id="kilos-graph" style="width: 100%; height: 100px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" style="border-left: solid 1px #CCC;">
+                    <div class="col-md-3">
+                        <h5>SEM ANT</h5>
+                        <div class="chart" id="graph-netos" data-percent="{% for self in totales %}
+                                    {{ self.var_neto|floatformat:0|intcomma }}
+                                {% endfor %}">
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div style="margin: auto; height: 50px; padding-top: 20px; padding-bottom: 0px;">
+                            <h3>VENTA NETA</h3>
+                            <h3 class="valor">
+                                {% for self in totales %}
+                                    {{ self.neto|floatformat:0|intcomma }} $M
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>ULT 6 SEM</h5>
+                        <div>
+                            <div id="netos-graph" style="width: 100%; height: 100px; margin: 0 auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr/>
+            <section id="section_precio" class="banner_fi">
+                <div class="box-header">
+                    <h4 class="title">PRECIO PROMEDIO</h4>
+                    <hr/>
+                    <h1>$
+                        {% for self in totales %}
+                            {{ self.precio|floatformat:0|intcomma }}
+                        {% endfor %}
+                    </h1>
+                    <article>
+                        <div class="col-md-6">
+                            <h4>Mes Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.mes_precio < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.mes_precio }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Sem. Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.sem_precio < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.sem_precio }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </article>
+                    <hr/>
+                    <h5>ULTIMAS 6 SEMANAS</h5>
+                    <div id="acum_pp" style="width: 90%; height: 115px; margin: 10px auto"></div>
+                </div>
+                <div class="box-body">
+                    <div id="breadcrumbs_costo">
+                        {% for foo in tipoCliente %}
+                            <article class="col-md-4">
+                                <aside class="arrow {{ foo.tipoCliente|lower }}">
+                                    <p>{{ foo.tipoCliente|upper }}</p>
+                                </aside>
+                                <br/>
+                                <section>
+                                    <table class="table table-bordered table-responsive">
+                                        <thead>
+                                            <th></th>
+                                            <th>NAC.</th>
+                                            <th>ZONA</th>
+                                            <th>SUC.</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for self in precios %}
+                                                {% if self.tipoCliente == foo.tipoCliente %}
+                                                    <tr>
+                                                        <td>{{ self.sector|truncatechars:13|upper }}</td>
+                                                        <td style="color: {% if self.nacional > self.zonal and self.nacional > self.sucursal %}#4D9379{% elif self.nacional < self.zonal and self.nacional < self.sucursal %}#AC291F{% else %}#888888{% endif %}"><b>{{ self.nacional|floatformat:0|intcomma }}</b></td>
+                                                        <td style="color: {% if self.zonal > self.nacional and self.zonal > self.sucursal %}#4D9379{% elif self.zonal < self.nacional and self.zonal < self.sucursal %}#AC291F{% else %}#888888{% endif %}"><b>{{ self.zonal|floatformat:0|intcomma }}</b></td>
+                                                        <td style="color: {% if self.sucursal > self.nacional and self.sucursal > self.zonal %}#4D9379{% elif self.sucursal < self.nacional and self.sucursal < self.zonal %}#AC291F{% else %}#888888{% endif %}"><b>{{ self.sucursal|floatformat:0|intcomma }}</b></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </article>
+                        {% endfor %}
+                        <section class="footer">
+                            {% for p in periodo %}
+                                <a class="btn btn-xs btn-warning" href="{% url 'accionables_precios' pk=p.periodo__id %}"><i class="fa fa-search"></i>Accionables...</a>
+                            {% endfor %}
+                        </section>
+                    </div>
+                </div>
+            </section>
+            <section id="section_locales" class="banner_fi">
+                <div class="box-header">
+                    <h4 class="title">NRO LOCALES</h4>
+                    <hr/>
+                    <h1>
+                        {% for self in totales %}
+                            {{ self.locales|floatformat:0|intcomma }}
+                        {% endfor %}
+                    </h1>
+                    <article>
+                        <div class="col-md-6">
+                            <h4>Mes Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.mes_local < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.mes_local }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Sem. Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.sem_local < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.sem_local }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </article>
+                    <hr/>
+                    <h5>ULTIMAS 6 SEMANAS</h5>
+                    <div id="acum_locales" style="width: 90%; height: 115px; margin: 10px auto"></div>
+                </div>
+                <div class="box-body">
+                    <div id="breadcrumbs_costo">
+                        {% for foo in tipoCliente %}
+                            <article class="col-md-4">
+                                <aside class="arrow {{ foo.tipoCliente|lower }}">
+                                    <p>{{ foo.tipoCliente|upper }}</p>
+                                </aside>
+                                <br/>
+                                <section class="graf-loc">
+                                    <div class="col-md-5">
+                                        {% for icono in fa_locales %}
+                                            {% if foo.tipoCliente.codigo == icono.tipoCliente.codigo %}
+                                                <div id="cuenta-{{ icono.fa_locales }}" data-numero="{{ icono.fa_locales }}" data-clase="text-verde"></div>
+                                                <div id="cuenta-{{ icono.fa_nuevos }}" data-numero="{{ icono.fa_nuevos }}" data-clase="text-amarillo"></div>
+                                                <div id="cuenta-{{ icono.fa_recuperados }}" data-numero="{{ icono.fa_recuperados }}" data-clase="text-naranjo"></div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-md-7">
+                                        <i class="fa fa-male locales"></i>
+                                        <h6 class="locales">NRO LOCALES</h6>
+                                        <p class="locales">{% for local in locales %}
+                                            {% if foo.tipoCliente == local.tipoCliente %}
+                                                {{ local.locales|floatformat:0|intcomma }}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </p>
+                                        <i class="fa fa-male nuevos"></i>
+                                        <h6 class="nuevos">NUEVOS</h6>
+                                        <p class="nuevos">{% for nuevo in nuevos %}
+                                            {% if foo.tipoCliente == nuevo.tipoCliente %}
+                                                {{ nuevo.locales|floatformat:0|intcomma }}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </p>
+                                        <i class="fa fa-male recuperados"></i>
+                                        <h6 class="recuperados">RECUPERADOS</h6>
+                                        <p class="recuperados">{% for recuperado in recuperados %}
+                                            {% if foo.tipoCliente == recuperado.tipoCliente %}
+                                                {{ recuperado.locales|floatformat:0|intcomma }}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </p>
+                                    </div>
+                                </section>
+                                <hr class="gris"/>
+                                <section class="graf-fug">
+                                    <div class="col-md-5">
+                                        <i class="fa fa-male text-danger"></i>
+                                        <span class="text-danger"> 3M</span>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <i class="fa fa-male text-danger"></i>
+                                        <h6 class="text-danger">FUGADOS</h6>
+                                        <p class="text-danger">{% for local in fugados %}
+                                            {% if foo.tipoCliente == local.tipoCliente %}
+                                                {{ local.locales|floatformat:0|intcomma }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </section>
+                            </article>
+                        {% endfor %}
+                        <section class="footer">
+                            {% for p in periodo %}
+                                <a class="btn btn-xs btn-warning" href="{% url 'accionables_locales' pk=p.periodo__id %}"><i class="fa fa-search"></i>Accionables...</a>
+                            {% endfor %}
+                        </section>
+                    </div>
+                </div>
+            </section>
+            <section id="section_frecuencia" class="banner_fi">
+                <div class="box-header">
+                    <h4 class="title">FRECUENCIA</h4>
+                    <hr/>
+                    <h1>
+                        {% for self in totales %}
+                            {{ self.frecuencia|floatformat:2|intcomma }}
+                        {% endfor %}
+                    </h1>
+                    <article>
+                        <div class="col-md-6">
+                            <h4>Mes Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.mes_frecuencia < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.mes_frecuencia }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Sem. Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.sem_frecuencia < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.sem_frecuencia }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </article>
+                    <hr/>
+                    <h5>ULTIMAS 6 SEMANAS</h5>
+                    <div id="acum_frecuencia" style="width: 90%; height: 115px; margin: 10px auto"></div>
+                </div>
+                <div class="box-body">
+                    <div id="breadcrumbs_costo">
+                        {% for foo in tipoCliente %}
+                            <article class="col-md-4">
+                                <aside class="arrow {{ foo.tipoCliente|lower }}">
+                                    <p>{{ foo.tipoCliente|upper }}</p>
+                                </aside>
+                                <br/>
+                                <section>
+                                    <table class="table table-bordered table-responsive" cellpadding="10">
+                                        <thead>
+                                            <th></th>
+                                            <th>CRUDO</th>
+                                            <th>PROC</th>
+                                        </thead>
+                                        <tbody>
+                                            {% for self in frecuencia %}
+                                                {% if foo.tipoCliente == self.tipoCliente %}
+                                                    <tr>
+                                                        <td>{{ self.categoria|upper }}</td>
+                                                        <td>{{ self.crudo }}</td>
+                                                        <td>{{ self.procesado }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </article>
+                        {% endfor %}
+                        <section class="footer">
+                            <a class="btn btn-xs btn-warning" href=""><i class="fa fa-search"></i>Accionables...</a>
+                        </section>
+                    </div>
+                </div>
+            </section>
+            <section id="section_ticket" class="banner_fi">
+                <div class="box-header">
+                    <h4 class="title">TICKET PROMEDIO</h4>
+                    <hr/>
+                    <h1>
+                        {% for self in totales %}
+                            {{ self.ticket|floatformat:1|intcomma }}
+                        {% endfor %}
+                    </h1>
+                    <article>
+                        <div class="col-md-6">
+                            <h4>Mes Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.mes_ticket < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.mes_ticket }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Sem. Ant.</h4>
+                            <i class="fa fa-arrow-circle-o-{% for self in comparativo %}{% if self.sem_ticket < 0 %}down{% else %}up{% endif %}{% endfor %}"></i>
+                            <h3>
+                                {% for self in comparativo %}
+                                    {{ self.sem_ticket }}%
+                                {% endfor %}
+                            </h3>
+                        </div>
+                    </article>
+                    <hr/>
+                    <h5>ULTIMAS 6 SEMANAS</h5>
+                    <div id="acum_ticket" style="width: 90%; height: 115px; margin: 10px auto"></div>
+                </div>
+                <div class="box-body">
+                    <div id="breadcrumbs_costo">
+                        {% for foo in tipoCliente %}
+                            <article class="col-md-4">
+                                <aside class="arrow {{ foo.tipoCliente|lower }}">
+                                    <p>{{ foo.tipoCliente|upper }}</p>
+                                </aside>
+                                <br/>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">CRUDOS</div>
+                                    <div class="panel-body">
+                                        {% for self in ticket %}
+                                            {% if foo.tipoCliente == self.tipoCliente %}
+                                                <div class="dd" style="float: left;">
+                                                    <p>{{ self.dia|upper }}</p>
+                                                    <p>{{ self.crudo|floatformat:0|intcomma }}</p>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">PROCESADOS</div>
+                                    <div class="panel-body">
+                                        {% for self in ticket %}
+                                            {% if foo.tipoCliente == self.tipoCliente %}
+                                                <div class="dd" style="float: left;">
+                                                    <p>{{ self.dia|upper }}</p>
+                                                    <p>{{ self.procesado|floatformat:0|intcomma }}</p>
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                        <section class="footer">
+                            <a class="btn btn-xs btn-warning" href=""><i class="fa fa-search"></i>Accionables...</a>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </div>
+    <div class="filtros" style="margin-top: 10px;">
+        {% if periodo_anterior %}
+            <div class="pull-left">
+                <a href="{% url 'venta_filtro' pk=periodo_anterior %}" class="btn btn-primary btn-xs"><< Anterior</a>
+            </div>
+        {% else %}
+            <div class="pull-left">
+                <a href="" class="btn btn-primary btn-xs" disabled="disabled"><< Anterior</a>
+            </div>
+        {% endif %}
+        {% if periodo_posterior %}
+            <div class="pull-right" style="margin-left: 10px;">
+                <a href="{% url 'venta_filtro' pk=periodo_posterior %}" class="btn btn-primary btn-xs">Posterior >></a>
+            </div>
+        {% else %}
+            <div class="pull-right" style="margin-left: 10px;">
+                <a href="" class="btn btn-primary btn-xs" disabled="disabled">Posterior >></a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{{ STATIC_URL }}plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}plugins/highcharts/js/highcharts.js"></script>
+    <script src="{{ STATIC_URL }}js/graficos_formulaIngreso.js"></script>
+    <script>
+        $("#menu_formula_ingreso").addClass('active');
+    </script>
+{% endblock %}
